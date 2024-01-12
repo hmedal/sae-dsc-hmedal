@@ -14,6 +14,7 @@ SAE_DFSCdir: str = os.path.dirname(__file__)
 
 # read data into dataframes
 suppliers: DataFrame = read_csv(SAE_DFSCdir + "/resources/suppliers.csv")
+customers: DataFrame = read_csv(SAE_DFSCdir + "/resources/customers.csv")
 
 seed = 1
 
