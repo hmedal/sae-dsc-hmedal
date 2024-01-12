@@ -20,7 +20,6 @@ seed = 1
 
 def getPartsDataFromWithRandomSuppliers(df):
     num_rows = df.shape[0]
-    #random_suppliers = np.random.choice(suppliers['Name'], num_rows)
     random_suppliers = [np.random.choice(suppliers['Name'], size = np.random.randint(low=1, high=4), replace=False) for _ in range(num_rows)]
     df['Suppliers'] = random_suppliers
     return df
