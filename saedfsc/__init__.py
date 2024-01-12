@@ -30,13 +30,13 @@ def getPartOptionsWithSuppliers():
     np.random.seed(seed)
 
     wingparts = getPartsDataFromWithRandomSuppliers(sae.materials.merge(sae.wings, how='cross').sample(n=samples, random_state=seed))
-    parts['rearwing'] = wingparts
-    parts['frontwing'] = wingparts
-    parts['sidewing'] = wingparts
+    parts['wings'] = wingparts
+    #parts['frontwing'] = wingparts
+    #parts['sidewing'] = wingparts
 
     tireOptions = getPartsDataFromWithRandomSuppliers(sae.pressure.merge(sae.tires, how='cross'))
-    parts['reartire'] = tireOptions
-    parts['fronttire'] = tireOptions
+    parts['tires'] = tireOptions
+    #parts['fronttire'] = tireOptions
 
     parts['engine'] = getPartsDataFromWithRandomSuppliers(sae.motors)
     parts['cabin'] = getPartsDataFromWithRandomSuppliers(sae.materials.merge(sae.cabins, how='cross').sample(n=samples, random_state=seed))
@@ -44,6 +44,6 @@ def getPartOptionsWithSuppliers():
     parts['brakes'] = getPartsDataFromWithRandomSuppliers(sae.brakes)
 
     suspensionParts = getPartsDataFromWithRandomSuppliers(sae.suspension)
-    parts['rearsuspension'] = suspensionParts
-    parts['frontsuspension'] = suspensionParts
+    parts['suspension'] = suspensionParts
+    #parts['frontsuspension'] = suspensionParts
     return parts

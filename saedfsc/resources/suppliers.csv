@@ -1,8 +1,8 @@
-Name,Location,Rating
-Supplier1,Location4,1.9619313199765185
-Supplier2,Location1,4.843323075156103
-Supplier3,Location2,2.775759901260496
-Supplier4,Location3,2.757290615044803
-Supplier5,Location2,1.5514481367472301
-Supplier6,Location3,1.9264301518656661
-Supplier7,Location4,3.2719089347224353
+Name,Location,Rating,SetUpCost
+Supplier1,Location1,1.1787423904365575,4303
+Supplier2,Location2,2.9306490116514583,2174
+Supplier3,Location1,4.821297506315979,2699
+Supplier4,Location4,2.837145774206944,2724
+Supplier5,Location2,3.659920928561171,4715
+Supplier6,Location2,1.5601584585647505,2056
+Supplier7,Location3,1.1653775258569312,3938
