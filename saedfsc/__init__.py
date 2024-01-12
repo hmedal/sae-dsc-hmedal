@@ -15,15 +15,17 @@ SAE_DFSCdir: str = os.path.dirname(__file__)
 # read data into dataframes
 suppliers: DataFrame = read_csv(SAE_DFSCdir + "/resources/suppliers.csv")
 
+seed = 1
+
 def getPartsDataFromWithRandomSuppliers(df):
     num_rows = df.shape[0]
-    random_suppliers = np.random.choice(suppliers['Name'], num_rows)
-    df['Supplier'] = random_suppliers
+    #random_suppliers = np.random.choice(suppliers['Name'], num_rows)
+    random_suppliers = [np.random.choice(suppliers['Name'], np.random.randint(low=1, high=4)) for _ in range(num_rows)]
+    df['Suppliers'] = random_suppliers
     return df
 
 def getPartOptionsWithSuppliers():
     parts = {}
-    seed = 1
     samples = 20
     np.random.seed(seed)
 
@@ -40,7 +42,7 @@ def getPartOptionsWithSuppliers():
     parts['cabin'] = getPartsDataFromWithRandomSuppliers(sae.materials.merge(sae.cabins, how='cross').sample(n=samples, random_state=seed))
     parts['impactattenuator'] = getPartsDataFromWithRandomSuppliers(sae.materials.merge(sae.attenuators, how='cross').sample(n=samples, random_state=seed))
     parts['brakes'] = getPartsDataFromWithRandomSuppliers(sae.brakes)
-    
+
     suspensionParts = getPartsDataFromWithRandomSuppliers(sae.suspension)
     parts['rearsuspension'] = suspensionParts
     parts['frontsuspension'] = suspensionParts
