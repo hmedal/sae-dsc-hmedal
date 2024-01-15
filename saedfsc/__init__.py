@@ -1,9 +1,17 @@
 import os
 from pandas import read_csv, read_excel, DataFrame
 import sae
+from sae import COTSCar
 import gurobipy as gp
 from gurobipy import GRB
+from gurobipy import quicksum as qsum
 import numpy as np
+
+from typing import List
+
+import sys
+sys.path.append('../')
+import saedfsc
 
 import sys
 sys.path.append('../')
@@ -16,6 +24,12 @@ SAE_DFSCdir: str = os.path.dirname(__file__)
 suppliers: DataFrame = read_csv(SAE_DFSCdir + "/resources/suppliers.csv")
 customers: DataFrame = read_csv(SAE_DFSCdir + "/resources/customers.csv")
 qtyDiscountSchedule: DataFrame = read_csv(SAE_DFSCdir + "/resources/qtyDiscountSchedule.csv")
+
+customers = saedfsc.customers['Name'].to_list()
+cQty = dict(zip(saedfsc.customers['Name'], saedfsc.customers['Quantity'])) # customer quantities
+cPriceFocus = dict(zip(saedfsc.customers['Name'], saedfsc.customers['PriceFocus']))
+name_weights_dict = saedfsc.customers.set_index('Name')['PerformanceUtilityWeights'].to_dict()
+cWts = {c : np.fromstring(name_weights_dict[c].strip('[]'), sep=',') for c in name_weights_dict}
 
 seed = 1
 
@@ -51,3 +65,14 @@ def getPartOptionsWithSuppliers():
 
 def getUtilityForPerformanceVector():
     pass
+
+def getTotalUtilityForCustomer(car : COTSCar, c : str):
+    total_utility = 0
+    perf_utility = car.partworth_objectives(weights=cWts[c])[0]
+    total_utility += (1-cPriceFocus[c])*perf_utility - cPriceFocus[c]*pricePerf
+    return total_utility
+
+def getMarketShare(car : COTSCar, c : str, competitors : List[COTSCar]): # based on logit model of demand
+    carUtility = getTotalUtilityForCustomer(car, c)
+    totalCompetitorUtility = sum([getTotalUtilityForCustomer(car, c) for car in competitors])
+    return carUtility / (totalCompetitorUtility + carUtility)
