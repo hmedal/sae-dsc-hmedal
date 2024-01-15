@@ -1,4 +1,4 @@
-Supplier,Part,PriceLevel,minQty,discount
+Supplier,Part,PriceLevel,MinQty,Discount
 Supplier1,1,1,5,0.2
 Supplier1,1,2,10,0.3
 Supplier1,1,3,15,0.4
