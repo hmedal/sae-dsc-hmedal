@@ -48,3 +48,6 @@ def getPartOptionsWithSuppliers():
     parts['suspension'] = suspensionParts
     #parts['frontsuspension'] = suspensionParts
     return parts
+
+def getUtilityForPerformanceVector():
+    pass
