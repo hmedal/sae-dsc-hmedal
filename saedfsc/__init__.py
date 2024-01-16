@@ -1,8 +1,17 @@
 import os
 from pandas import read_csv, read_excel, DataFrame
 import sae
+from sae import COTSCar
 import gurobipy as gp
 from gurobipy import GRB
+from gurobipy import quicksum as qsum
+import numpy as np
+
+from typing import List
+
+import sys
+sys.path.append('../')
+import saedfsc
 
 import sys
 sys.path.append('../')
@@ -12,46 +21,58 @@ import saedfsc
 SAE_DFSCdir: str = os.path.dirname(__file__)
 
 # read data into dataframes
-products: DataFrame = read_csv(SAE_DFSCdir + "/resources/products.csv")
+suppliers: DataFrame = read_csv(SAE_DFSCdir + "/resources/suppliers.csv")
+customers: DataFrame = read_csv(SAE_DFSCdir + "/resources/customers.csv")
+qtyDiscountSchedule: DataFrame = read_csv(SAE_DFSCdir + "/resources/qtyDiscountSchedule.csv")
 
-#class COSTSCarFramework():
-#    pass
+customersNames = saedfsc.customers['Name'].to_list()
+cQty = dict(zip(saedfsc.customers['Name'], saedfsc.customers['Quantity'])) # customer quantities
+cPriceFocus = dict(zip(saedfsc.customers['Name'], saedfsc.customers['PriceFocus']))
+name_weights_dict = saedfsc.customers.set_index('Name')['PerformanceUtilityWeights'].to_dict()
+cWts = {c : np.fromstring(name_weights_dict[c].strip('[]'), sep=',') for c in name_weights_dict}
 
-class ProductFamilyGurobipyModel():    
-    
-    def __init__(self):
-        car = sae.COTSCar()
-        self.m = gp.Model()
-        self.parttypes = [sae.materials, sae.tires, sae.motors, sae.brakes, 
-                     sae.suspension]
-        sae.materials.name = 'materials'
-        sae.tires.name = 'tires'
-        sae.motors.name = 'motors'
-        sae.brakes.name = 'brakes'
-        sae.suspension.name = 'suspension'
-        self.names = [parttype.name for parttype in self.parttypes]
-        self.prodIndices = saedfsc.products.index.values
-        self._create_vars()
-        self._addConstrs()
-        
-    def _create_vars(self):
-        self._create_discrete_vars()
-        self._create_continuous_vars()
-    
-    def _create_continuous_vars(self):
-        names = sae.params['variable'].tolist()
-        self.y = self.m.addVars(self.prodIndices, names, 
-                                         name="y")
-        
-    def _create_discrete_vars(self): 
-        self.x = {}
-        for df in self.parttypes:
-            self.x[df.name] = self.m.addVars(self.prodIndices, df.index.values, 
-                                   vtype=GRB.BINARY, name="x[" + df.name + "]")
-            
-    def _addConstrs(self):
-        self._addChoiceConstrs()
-        
-    def _addChoiceConstrs(self):
-        self.m.addConstrs((self.x[name].sum(p, '*') == 1 for name in self.names 
-                                                    for p in self.prodIndices))
+seed = 1
+
+def getPartsDataFromWithRandomSuppliers(df):
+    num_rows = df.shape[0]
+    random_suppliers = [np.random.choice(suppliers['Name'], size = np.random.randint(low=1, high=4), replace=False) for _ in range(num_rows)]
+    df['Suppliers'] = random_suppliers
+    return df
+
+def getPartOptionsWithSuppliers():
+    parts = {}
+    samples = 20
+    np.random.seed(seed)
+
+    wingparts = getPartsDataFromWithRandomSuppliers(sae.materials.merge(sae.wings, how='cross').sample(n=samples, random_state=seed))
+    parts['wings'] = wingparts
+    #parts['frontwing'] = wingparts
+    #parts['sidewing'] = wingparts
+
+    tireOptions = getPartsDataFromWithRandomSuppliers(sae.pressure.merge(sae.tires, how='cross'))
+    parts['tires'] = tireOptions
+    #parts['fronttire'] = tireOptions
+
+    parts['engine'] = getPartsDataFromWithRandomSuppliers(sae.motors)
+    parts['cabin'] = getPartsDataFromWithRandomSuppliers(sae.materials.merge(sae.cabins, how='cross').sample(n=samples, random_state=seed))
+    parts['impactattenuator'] = getPartsDataFromWithRandomSuppliers(sae.materials.merge(sae.attenuators, how='cross').sample(n=samples, random_state=seed))
+    parts['brakes'] = getPartsDataFromWithRandomSuppliers(sae.brakes)
+
+    suspensionParts = getPartsDataFromWithRandomSuppliers(sae.suspension)
+    parts['suspension'] = suspensionParts
+    #parts['frontsuspension'] = suspensionParts
+    return parts
+
+def getUtilityForPerformanceVector():
+    pass
+
+def getTotalUtilityForCustomer(car : COTSCar, c : str):
+    total_utility = 0
+    perf_utility = car.partworth_objectives(weights=cWts[c])[0]
+    total_utility += (1-cPriceFocus[c])*perf_utility - cPriceFocus[c]*pricePerf
+    return total_utility
+
+def getMarketShare(car : COTSCar, c : str, competitors : List[COTSCar]): # based on logit model of demand
+    carUtility = getTotalUtilityForCustomer(car, c)
+    totalCompetitorUtility = sum([getTotalUtilityForCustomer(car, c) for car in competitors])
+    return carUtility / (totalCompetitorUtility + carUtility)
