@@ -25,7 +25,7 @@ suppliers: DataFrame = read_csv(SAE_DFSCdir + "/resources/suppliers.csv")
 customers: DataFrame = read_csv(SAE_DFSCdir + "/resources/customers.csv")
 qtyDiscountSchedule: DataFrame = read_csv(SAE_DFSCdir + "/resources/qtyDiscountSchedule.csv")
 
-customers = saedfsc.customers['Name'].to_list()
+customersNames = saedfsc.customers['Name'].to_list()
 cQty = dict(zip(saedfsc.customers['Name'], saedfsc.customers['Quantity'])) # customer quantities
 cPriceFocus = dict(zip(saedfsc.customers['Name'], saedfsc.customers['PriceFocus']))
 name_weights_dict = saedfsc.customers.set_index('Name')['PerformanceUtilityWeights'].to_dict()
