@@ -62,17 +62,3 @@ def getPartOptionsWithSuppliers():
     parts['suspension'] = suspensionParts
     #parts['frontsuspension'] = suspensionParts
     return parts
-
-def getUtilityForPerformanceVector():
-    pass
-
-def getTotalUtilityForCustomer(car : COTSCar, c : str):
-    total_utility = 0
-    perf_utility = car.partworth_objectives(weights=cWts[c])[0]
-    total_utility += (1-cPriceFocus[c])*perf_utility - cPriceFocus[c]*pricePerf
-    return total_utility
-
-def getMarketShare(car : COTSCar, c : str, competitors : List[COTSCar]): # based on logit model of demand
-    carUtility = getTotalUtilityForCustomer(car, c)
-    totalCompetitorUtility = sum([getTotalUtilityForCustomer(car, c) for car in competitors])
-    return carUtility / (totalCompetitorUtility + carUtility)
