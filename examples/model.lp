@@ -495,66 +495,72 @@ Maximize
    - 2 cumCost[rear] * meanDemandTimesStageTime[rear]
    - 2 cumCost[FINAL] * meanDemandTimesStageTime[FINAL] ] / 2 
 Subject To
- StageCostCalc[rear_wing]: - optionSelect[rear_wing,0]
-   - 8 optionSelect[rear_wing,1] + stageCost[rear_wing] = 0
- StageCostCalc[front_wing]: - 3 optionSelect[front_wing,0]
-   - 4 optionSelect[front_wing,1] + stageCost[front_wing] = 0
- StageCostCalc[side_wing]: - 4 optionSelect[side_wing,0]
-   - 2 optionSelect[side_wing,1] + stageCost[side_wing] = 0
- StageCostCalc[front_tire]: - 2 optionSelect[front_tire,0]
-   - 7 optionSelect[front_tire,1] + stageCost[front_tire] = 0
- StageCostCalc[rear_tire]: - 3 optionSelect[rear_tire,0]
-   - optionSelect[rear_tire,1] + stageCost[rear_tire] = 0
- StageCostCalc[engine]: - 7 optionSelect[engine,0]
-   - 7 optionSelect[engine,1] + stageCost[engine] = 0
- StageCostCalc[cabin]: - 4 optionSelect[cabin,0] - 9 optionSelect[cabin,1]
-   + stageCost[cabin] = 0
- StageCostCalc[impactattenuator]: - 3 optionSelect[impactattenuator,0]
-   - 3 optionSelect[impactattenuator,1] + stageCost[impactattenuator] = 0
- StageCostCalc[brakes]: - 9 optionSelect[brakes,0]
-   - 4 optionSelect[brakes,1] + stageCost[brakes] = 0
- StageCostCalc[front_suspension]: - 3 optionSelect[front_suspension,0]
-   - 5 optionSelect[front_suspension,1] + stageCost[front_suspension] = 0
- StageCostCalc[rear_suspension]: - optionSelect[rear_suspension,0]
-   - 4 optionSelect[rear_suspension,1] + stageCost[rear_suspension] = 0
- StageCostCalc[midbody]: - 9 optionSelect[midbody,0]
-   - 9 optionSelect[midbody,1] + stageCost[midbody] = 0
- StageCostCalc[front]: - optionSelect[front,0] - 6 optionSelect[front,1]
-   + stageCost[front] = 0
- StageCostCalc[rear]: - 2 optionSelect[rear,0] - optionSelect[rear,1]
-   + stageCost[rear] = 0
- StageCostCalc[FINAL]: - 7 optionSelect[FINAL,0] - 8 optionSelect[FINAL,1]
-   + stageCost[FINAL] = 0
- StageTimeCalc[rear_wing]: - 3 optionSelect[rear_wing,0]
-   - 3 optionSelect[rear_wing,1] + stageTime[rear_wing] = 0
- StageTimeCalc[front_wing]: - 4 optionSelect[front_wing,0]
-   - 3 optionSelect[front_wing,1] + stageTime[front_wing] = 0
- StageTimeCalc[side_wing]: - 5 optionSelect[side_wing,0]
-   - 3 optionSelect[side_wing,1] + stageTime[side_wing] = 0
- StageTimeCalc[front_tire]: - 5 optionSelect[front_tire,0]
-   - 9 optionSelect[front_tire,1] + stageTime[front_tire] = 0
- StageTimeCalc[rear_tire]: - 4 optionSelect[rear_tire,0]
-   - optionSelect[rear_tire,1] + stageTime[rear_tire] = 0
- StageTimeCalc[engine]: - optionSelect[engine,0] - 4 optionSelect[engine,1]
-   + stageTime[engine] = 0
- StageTimeCalc[cabin]: - 9 optionSelect[cabin,0] - 9 optionSelect[cabin,1]
-   + stageTime[cabin] = 0
- StageTimeCalc[impactattenuator]: - 4 optionSelect[impactattenuator,0]
-   - optionSelect[impactattenuator,1] + stageTime[impactattenuator] = 0
- StageTimeCalc[brakes]: - 9 optionSelect[brakes,0]
-   - 9 optionSelect[brakes,1] + stageTime[brakes] = 0
- StageTimeCalc[front_suspension]: - 9 optionSelect[front_suspension,0]
-   - 4 optionSelect[front_suspension,1] + stageTime[front_suspension] = 0
- StageTimeCalc[rear_suspension]: - 5 optionSelect[rear_suspension,0]
-   - 7 optionSelect[rear_suspension,1] + stageTime[rear_suspension] = 0
- StageTimeCalc[midbody]: - optionSelect[midbody,0]
-   - 6 optionSelect[midbody,1] + stageTime[midbody] = 0
- StageTimeCalc[front]: - 7 optionSelect[front,0] - 4 optionSelect[front,1]
-   + stageTime[front] = 0
- StageTimeCalc[rear]: - 9 optionSelect[rear,0] - 5 optionSelect[rear,1]
-   + stageTime[rear] = 0
- StageTimeCalc[FINAL]: - 6 optionSelect[FINAL,0] - 9 optionSelect[FINAL,1]
-   + stageTime[FINAL] = 0
+ StageCostCalc[rear_wing]: stageCost[rear_wing] - optionSelect[rear_wing,0]
+   - 8 optionSelect[rear_wing,1] = 0
+ StageCostCalc[front_wing]: stageCost[front_wing]
+   - 3 optionSelect[front_wing,0] - 4 optionSelect[front_wing,1] = 0
+ StageCostCalc[side_wing]: stageCost[side_wing]
+   - 4 optionSelect[side_wing,0] - 2 optionSelect[side_wing,1] = 0
+ StageCostCalc[front_tire]: stageCost[front_tire]
+   - 2 optionSelect[front_tire,0] - 7 optionSelect[front_tire,1] = 0
+ StageCostCalc[rear_tire]: stageCost[rear_tire]
+   - 3 optionSelect[rear_tire,0] - optionSelect[rear_tire,1] = 0
+ StageCostCalc[engine]: stageCost[engine] - 7 optionSelect[engine,0]
+   - 7 optionSelect[engine,1] = 0
+ StageCostCalc[cabin]: stageCost[cabin] - 4 optionSelect[cabin,0]
+   - 9 optionSelect[cabin,1] = 0
+ StageCostCalc[impactattenuator]: stageCost[impactattenuator]
+   - 3 optionSelect[impactattenuator,0]
+   - 3 optionSelect[impactattenuator,1] = 0
+ StageCostCalc[brakes]: stageCost[brakes] - 9 optionSelect[brakes,0]
+   - 4 optionSelect[brakes,1] = 0
+ StageCostCalc[front_suspension]: stageCost[front_suspension]
+   - 3 optionSelect[front_suspension,0]
+   - 5 optionSelect[front_suspension,1] = 0
+ StageCostCalc[rear_suspension]: stageCost[rear_suspension]
+   - optionSelect[rear_suspension,0] - 4 optionSelect[rear_suspension,1]
+   = 0
+ StageCostCalc[midbody]: stageCost[midbody] - 9 optionSelect[midbody,0]
+   - 9 optionSelect[midbody,1] = 0
+ StageCostCalc[front]: stageCost[front] - optionSelect[front,0]
+   - 6 optionSelect[front,1] = 0
+ StageCostCalc[rear]: stageCost[rear] - 2 optionSelect[rear,0]
+   - optionSelect[rear,1] = 0
+ StageCostCalc[FINAL]: stageCost[FINAL] - 7 optionSelect[FINAL,0]
+   - 8 optionSelect[FINAL,1] = 0
+ StageTimeCalc[rear_wing]: stageTime[rear_wing]
+   - 3 optionSelect[rear_wing,0] - 3 optionSelect[rear_wing,1] = 0
+ StageTimeCalc[front_wing]: stageTime[front_wing]
+   - 4 optionSelect[front_wing,0] - 3 optionSelect[front_wing,1] = 0
+ StageTimeCalc[side_wing]: stageTime[side_wing]
+   - 5 optionSelect[side_wing,0] - 3 optionSelect[side_wing,1] = 0
+ StageTimeCalc[front_tire]: stageTime[front_tire]
+   - 5 optionSelect[front_tire,0] - 9 optionSelect[front_tire,1] = 0
+ StageTimeCalc[rear_tire]: stageTime[rear_tire]
+   - 4 optionSelect[rear_tire,0] - optionSelect[rear_tire,1] = 0
+ StageTimeCalc[engine]: stageTime[engine] - optionSelect[engine,0]
+   - 4 optionSelect[engine,1] = 0
+ StageTimeCalc[cabin]: stageTime[cabin] - 9 optionSelect[cabin,0]
+   - 9 optionSelect[cabin,1] = 0
+ StageTimeCalc[impactattenuator]: stageTime[impactattenuator]
+   - 4 optionSelect[impactattenuator,0] - optionSelect[impactattenuator,1]
+   = 0
+ StageTimeCalc[brakes]: stageTime[brakes] - 9 optionSelect[brakes,0]
+   - 9 optionSelect[brakes,1] = 0
+ StageTimeCalc[front_suspension]: stageTime[front_suspension]
+   - 9 optionSelect[front_suspension,0]
+   - 4 optionSelect[front_suspension,1] = 0
+ StageTimeCalc[rear_suspension]: stageTime[rear_suspension]
+   - 5 optionSelect[rear_suspension,0] - 7 optionSelect[rear_suspension,1]
+   = 0
+ StageTimeCalc[midbody]: stageTime[midbody] - optionSelect[midbody,0]
+   - 6 optionSelect[midbody,1] = 0
+ StageTimeCalc[front]: stageTime[front] - 7 optionSelect[front,0]
+   - 4 optionSelect[front,1] = 0
+ StageTimeCalc[rear]: stageTime[rear] - 9 optionSelect[rear,0]
+   - 5 optionSelect[rear,1] = 0
+ StageTimeCalc[FINAL]: stageTime[FINAL] - 6 optionSelect[FINAL,0]
+   - 9 optionSelect[FINAL,1] = 0
  calcCumCost[rear_wing]: - stageCost[rear_wing] + cumCost[rear_wing] = 0
  calcCumCost[front_wing]: - stageCost[front_wing] + cumCost[front_wing]
    = 0
@@ -571,29 +577,29 @@ Subject To
    + cumCost[front_suspension] = 0
  calcCumCost[rear_suspension]: - stageCost[rear_suspension]
    + cumCost[rear_suspension] = 0
- select1-component[rear_wing]: - nodeSelect[rear_wing]
+ select1-component[rear_wing]: - componentSelect[rear_wing]
    + optionSelect[rear_wing,0] + optionSelect[rear_wing,1] = 0
- select1-component[front_wing]: - nodeSelect[front_wing]
+ select1-component[front_wing]: - componentSelect[front_wing]
    + optionSelect[front_wing,0] + optionSelect[front_wing,1] = 0
- select1-component[side_wing]: - nodeSelect[side_wing]
+ select1-component[side_wing]: - componentSelect[side_wing]
    + optionSelect[side_wing,0] + optionSelect[side_wing,1] = 0
- select1-component[front_tire]: - nodeSelect[front_tire]
+ select1-component[front_tire]: - componentSelect[front_tire]
    + optionSelect[front_tire,0] + optionSelect[front_tire,1] = 0
- select1-component[rear_tire]: - nodeSelect[rear_tire]
+ select1-component[rear_tire]: - componentSelect[rear_tire]
    + optionSelect[rear_tire,0] + optionSelect[rear_tire,1] = 0
- select1-component[engine]: - nodeSelect[engine] + optionSelect[engine,0]
-   + optionSelect[engine,1] = 0
- select1-component[cabin]: - nodeSelect[cabin] + optionSelect[cabin,0]
+ select1-component[engine]: - componentSelect[engine]
+   + optionSelect[engine,0] + optionSelect[engine,1] = 0
+ select1-component[cabin]: - componentSelect[cabin] + optionSelect[cabin,0]
    + optionSelect[cabin,1] = 0
- select1-component[impactattenuator]: - nodeSelect[impactattenuator]
+ select1-component[impactattenuator]: - componentSelect[impactattenuator]
    + optionSelect[impactattenuator,0] + optionSelect[impactattenuator,1]
    = 0
- select1-component[brakes]: - nodeSelect[brakes] + optionSelect[brakes,0]
-   + optionSelect[brakes,1] = 0
- select1-component[front_suspension]: - nodeSelect[front_suspension]
+ select1-component[brakes]: - componentSelect[brakes]
+   + optionSelect[brakes,0] + optionSelect[brakes,1] = 0
+ select1-component[front_suspension]: - componentSelect[front_suspension]
    + optionSelect[front_suspension,0] + optionSelect[front_suspension,1]
    = 0
- select1-component[rear_suspension]: - nodeSelect[rear_suspension]
+ select1-component[rear_suspension]: - componentSelect[rear_suspension]
    + optionSelect[rear_suspension,0] + optionSelect[rear_suspension,1] = 0
  select1-other[midbody]: optionSelect[midbody,0] + optionSelect[midbody,1]
    = 1
@@ -608,46 +614,49 @@ Subject To
  netFlow[rear]: arcSelect[rear_wing,rear] + arcSelect[rear_tire,rear]
    + arcSelect[brakes,rear] + arcSelect[rear_suspension,rear]
    - 4 arcSelect[rear,FINAL] = 0
- sumOutFlow[rear_wing]: - nodeSelect[rear_wing] + arcSelect[rear_wing,rear]
-   = 0
- sumOutFlow[front_wing]: - nodeSelect[front_wing]
+ sumOutFlow[rear_wing]: - componentSelect[rear_wing]
+   + arcSelect[rear_wing,rear] = 0
+ sumOutFlow[front_wing]: - componentSelect[front_wing]
    + arcSelect[front_wing,front] = 0
- sumOutFlow[side_wing]: - nodeSelect[side_wing]
+ sumOutFlow[side_wing]: - componentSelect[side_wing]
    + arcSelect[side_wing,midbody] = 0
- sumOutFlow[front_tire]: - nodeSelect[front_tire]
+ sumOutFlow[front_tire]: - componentSelect[front_tire]
    + arcSelect[front_tire,front] = 0
- sumOutFlow[rear_tire]: - nodeSelect[rear_tire] + arcSelect[rear_tire,rear]
+ sumOutFlow[rear_tire]: - componentSelect[rear_tire]
+   + arcSelect[rear_tire,rear] = 0
+ sumOutFlow[engine]: - componentSelect[engine] + arcSelect[engine,midbody]
    = 0
- sumOutFlow[engine]: - nodeSelect[engine] + arcSelect[engine,midbody] = 0
- sumOutFlow[cabin]: - nodeSelect[cabin] + arcSelect[cabin,midbody] = 0
- sumOutFlow[impactattenuator]: - nodeSelect[impactattenuator]
+ sumOutFlow[cabin]: - componentSelect[cabin] + arcSelect[cabin,midbody]
+   = 0
+ sumOutFlow[impactattenuator]: - componentSelect[impactattenuator]
    + arcSelect[impactattenuator,front] = 0
- sumOutFlow[brakes]: - nodeSelect[brakes] + arcSelect[brakes,rear] = 0
- sumOutFlow[front_suspension]: - nodeSelect[front_suspension]
+ sumOutFlow[brakes]: - componentSelect[brakes] + arcSelect[brakes,rear]
+   = 0
+ sumOutFlow[front_suspension]: - componentSelect[front_suspension]
    + arcSelect[front_suspension,front] = 0
- sumOutFlow[rear_suspension]: - nodeSelect[rear_suspension]
+ sumOutFlow[rear_suspension]: - componentSelect[rear_suspension]
    + arcSelect[rear_suspension,rear] = 0
- useArcIfNode[rear_wing,rear]: - nodeSelect[rear_wing]
+ useArcIfNode[rear_wing,rear]: - componentSelect[rear_wing]
    + arcSelect[rear_wing,rear] <= 0
- useArcIfNode[front_wing,front]: - nodeSelect[front_wing]
+ useArcIfNode[front_wing,front]: - componentSelect[front_wing]
    + arcSelect[front_wing,front] <= 0
- useArcIfNode[side_wing,midbody]: - nodeSelect[side_wing]
+ useArcIfNode[side_wing,midbody]: - componentSelect[side_wing]
    + arcSelect[side_wing,midbody] <= 0
- useArcIfNode[front_tire,front]: - nodeSelect[front_tire]
+ useArcIfNode[front_tire,front]: - componentSelect[front_tire]
    + arcSelect[front_tire,front] <= 0
- useArcIfNode[rear_tire,rear]: - nodeSelect[rear_tire]
+ useArcIfNode[rear_tire,rear]: - componentSelect[rear_tire]
    + arcSelect[rear_tire,rear] <= 0
- useArcIfNode[engine,midbody]: - nodeSelect[engine]
+ useArcIfNode[engine,midbody]: - componentSelect[engine]
    + arcSelect[engine,midbody] <= 0
- useArcIfNode[cabin,midbody]: - nodeSelect[cabin]
+ useArcIfNode[cabin,midbody]: - componentSelect[cabin]
    + arcSelect[cabin,midbody] <= 0
- useArcIfNode[impactattenuator,front]: - nodeSelect[impactattenuator]
+ useArcIfNode[impactattenuator,front]: - componentSelect[impactattenuator]
    + arcSelect[impactattenuator,front] <= 0
- useArcIfNode[brakes,rear]: - nodeSelect[brakes] + arcSelect[brakes,rear]
-   <= 0
- useArcIfNode[front_suspension,front]: - nodeSelect[front_suspension]
+ useArcIfNode[brakes,rear]: - componentSelect[brakes]
+   + arcSelect[brakes,rear] <= 0
+ useArcIfNode[front_suspension,front]: - componentSelect[front_suspension]
    + arcSelect[front_suspension,front] <= 0
- useArcIfNode[rear_suspension,rear]: - nodeSelect[rear_suspension]
+ useArcIfNode[rear_suspension,rear]: - componentSelect[rear_suspension]
    + arcSelect[rear_suspension,rear] <= 0
  procureNodesInTime[rear_wing]: sIn[rear_wing] = 0
  procureNodesInTime[front_wing]: sIn[front_wing] = 0
@@ -695,11 +704,13 @@ Subject To
    + netTime[FINAL] = 0
  meanDemandVar: meanDemand - 16 marketShare[CustomerType1]
    - 10 marketShare[CustomerType2] - 19 marketShare[CustomerType3] = 0
- componentsRequired: nodeSelect[rear_wing] + nodeSelect[front_wing]
-   + nodeSelect[side_wing] + nodeSelect[front_tire] + nodeSelect[rear_tire]
-   + nodeSelect[engine] + nodeSelect[cabin] + nodeSelect[impactattenuator]
-   + nodeSelect[brakes] + nodeSelect[front_suspension]
-   + nodeSelect[rear_suspension] = 11
+ componentsRequired: componentSelect[rear_wing]
+   + componentSelect[front_wing] + componentSelect[side_wing]
+   + componentSelect[front_tire] + componentSelect[rear_tire]
+   + componentSelect[engine] + componentSelect[cabin]
+   + componentSelect[impactattenuator] + componentSelect[brakes]
+   + componentSelect[front_suspension] + componentSelect[rear_suspension]
+   = 11
  calcCumCost[midbody]: - stageCost[midbody] + cumCost[midbody] + [
    - arcSelect[side_wing,midbody] * cumCost[side_wing]
    - arcSelect[engine,midbody] * cumCost[engine]
@@ -946,10 +957,11 @@ Bounds
  netTime[FINAL] <= 79
  u_rootMass >= 1
 Binaries
- nodeSelect[rear_wing] nodeSelect[front_wing] nodeSelect[side_wing]
- nodeSelect[front_tire] nodeSelect[rear_tire] nodeSelect[engine]
- nodeSelect[cabin] nodeSelect[impactattenuator] nodeSelect[brakes]
- nodeSelect[front_suspension] nodeSelect[rear_suspension]
+ componentSelect[rear_wing] componentSelect[front_wing]
+ componentSelect[side_wing] componentSelect[front_tire]
+ componentSelect[rear_tire] componentSelect[engine] componentSelect[cabin]
+ componentSelect[impactattenuator] componentSelect[brakes]
+ componentSelect[front_suspension] componentSelect[rear_suspension]
  arcSelect[rear_wing,rear] arcSelect[front_wing,front]
  arcSelect[side_wing,midbody] arcSelect[front_tire,front]
  arcSelect[rear_tire,rear] arcSelect[engine,midbody]

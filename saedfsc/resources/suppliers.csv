@@ -1,8 +1,8 @@
-Name,Location,Rating,SetUpCost
-Supplier1,Location1,1.1787423904365575,4303
-Supplier2,Location2,2.9306490116514583,2174
-Supplier3,Location1,4.821297506315979,2699
-Supplier4,Location4,2.837145774206944,2724
-Supplier5,Location2,3.659920928561171,4715
-Supplier6,Location2,1.5601584585647505,2056
-Supplier7,Location3,1.1653775258569312,3938
+Name,Location,Rating,SetUpCost,Cost Per Unit,Time Per Unit
+Supplier1,Location3,3.536723589399345,4665,9,8
+Supplier2,Location2,3.20201687023198,4095,5,3
+Supplier3,Location4,4.723231214832661,1178,8,9
+Supplier4,Location1,2.7198477219165724,2503,4,2
+Supplier5,Location3,4.765030670562425,4383,8,7
+Supplier6,Location3,4.47043672798011,3035,2,4
+Supplier7,Location3,2.4624821739805944,3477,1,8
