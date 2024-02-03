@@ -133,27 +133,36 @@ Subject To
  stdDevDemandVar: [ stdDevDemand ^2 - 9 marketShare[CustomerType1] ^2
    - 9 marketShare[CustomerType2] ^2 - 9 marketShare[CustomerType3] ^2 ]
    <= 0
- marketShareCalc[CustomerType1]: - 0.07353441 objValVar[0]
+ customerUtilCalc[CustomerType1]: - 0.07353441 objValVar[0]
    - 0.23812319 objValVar[1] - 0.88198825 objValVar[2]
    - 0.18071148 objValVar[3] - 0.1822069 objValVar[4]
    - 0.86919866 objValVar[5] - 0.12726251 objValVar[6]
    - 0.86094461 objValVar[7] - 0.06614307 objValVar[8]
    - 0.12788772 objValVar[9] - 0.65358829 objValVar[10] + [
-   marketShare[CustomerType1] ^2 ] <= 0
- marketShareCalc[CustomerType2]: - 0.06854985 objValVar[0]
+   customerUtil[CustomerType1] ^2 ] <= 0
+ customerUtilCalc[CustomerType2]: - 0.06854985 objValVar[0]
    - 0.53773759 objValVar[1] - 0.93934427 objValVar[2]
    - 0.94031569 objValVar[3] - 0.3447028 objValVar[4]
    - 0.36092742 objValVar[5] - 0.62696254 objValVar[6]
    - 0.68824787 objValVar[7] - 0.34874709 objValVar[8]
    - 0.25989053 objValVar[9] - 0.19709851 objValVar[10] + [
-   marketShare[CustomerType2] ^2 ] <= 0
- marketShareCalc[CustomerType3]: - 0.98918637 objValVar[0]
+   customerUtil[CustomerType2] ^2 ] <= 0
+ customerUtilCalc[CustomerType3]: - 0.98918637 objValVar[0]
    - 0.9597768800000001 objValVar[1] - 0.30505229 objValVar[2]
    - 0.96212633 objValVar[3] - 0.09427434 objValVar[4]
    - 0.6756195 objValVar[5] - 0.52721584 objValVar[6]
    - 0.61422457 objValVar[7] - 0.71667116 objValVar[8]
    - 0.61611324 objValVar[9] - 0.86961674 objValVar[10] + [
-   marketShare[CustomerType3] ^2 ] <= 0
+   customerUtil[CustomerType3] ^2 ] <= 0
+ marketShareCalc[CustomerType1]: - 9 marketShare[CustomerType1]
+   + customerUtil[CustomerType1] + [
+   - marketShare[CustomerType1] * customerUtil[CustomerType1] ] = 0
+ marketShareCalc[CustomerType2]: - 8 marketShare[CustomerType2]
+   + customerUtil[CustomerType2] + [
+   - marketShare[CustomerType2] * customerUtil[CustomerType2] ] = 0
+ marketShareCalc[CustomerType3]: - 8 marketShare[CustomerType3]
+   + customerUtil[CustomerType3] + [
+   - marketShare[CustomerType3] * customerUtil[CustomerType3] ] = 0
 Bounds
  marketShare[CustomerType1] <= 1
  marketShare[CustomerType2] <= 1
