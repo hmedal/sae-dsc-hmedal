@@ -24,6 +24,7 @@ SAE_DFSCdir: str = os.path.dirname(__file__)
 suppliers: DataFrame = read_csv(SAE_DFSCdir + "/resources/suppliers.csv")
 customers: DataFrame = read_csv(SAE_DFSCdir + "/resources/customers.csv")
 qtyDiscountSchedule: DataFrame = read_csv(SAE_DFSCdir + "/resources/FullQuantityDiscountSchedule.csv")
+procurementInfo: DataFrame = read_csv(SAE_DFSCdir + "/resources/procurementInfo.csv")
     
 customersNames = saedfsc.customers['Name'].to_list()
 cQty = dict(zip(saedfsc.customers['Name'], saedfsc.customers['Quantity'])) # customer quantities
