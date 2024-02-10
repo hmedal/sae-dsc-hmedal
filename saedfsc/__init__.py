@@ -16,6 +16,7 @@ import saedfsc
 import sys
 sys.path.append('../')
 import saedfsc
+import networkx as nx
 
 # directory path
 SAE_DFSCdir: str = os.path.dirname(__file__)
@@ -167,3 +168,96 @@ def handleStatus(m : gp.Model):
         print("The model status is infeasible or unbounded. Set DualReductions parameter to 0 and reoptimize.")
     else:
         print("The model status is neither infeasible nor unbounded.")
+
+class COTSCarSupplyChainOptModel():
+
+    def __init__(self, customers, competitors, parts, nominalPartPrices, qtyDiscountSchedule, procurementInfo, suppliers, seed = 1):
+        self.customers = customers
+        self.competitors = competitors
+        self.parts = parts
+        self.nominalPartPrices = nominalPartPrices
+        self.qtyDiscountSchedule = qtyDiscountSchedule
+        self.procurementInfo = procurementInfo
+        self.suppliers = suppliers
+        self.seed = seed
+        self.model = gp.Model('COTSCarSupplyChainOptModel')
+        self.model.setParam('OutputFlag', 0)
+        self.model.setParam('TimeLimit', 60)
+        self.model.setParam('Seed', seed)
+        self.model.setParam('MIPGap', 0.05)
+
+        self.partVars = {}
+        self.supplierVars = {}
+        self.customerVars = {}
+        self.supplierPartVars = {}
+        self.supplierPartCustomerVars = {}
+        self.supplierPartCustomerPartVars = {}
+        self.supplierPartCustomerPartQty
+
+    def createComponentsAndAssemblies(self, partOptions):
+        components = []
+        componentsForSubsystems = {}
+        subsystemsForComponents = {}
+        for subsystem in partOptions.keys():
+            if subsystem == 'wings':
+                toAdd = ['rear wing', 'front wing', 'side wing']
+                for c in toAdd:
+                    components.append(c)
+                    subsystemsForComponents[c] = subsystem
+                componentsForSubsystems[subsystem] = toAdd
+            elif subsystem == 'tires':
+                toAdd = ['front tire', 'rear tire']
+                for c in toAdd:
+                    components.append(c)
+                    subsystemsForComponents[c] = subsystem
+                componentsForSubsystems[subsystem] = toAdd
+            elif subsystem == 'suspension':
+                #toAdd = ['front suspension', 'rear suspension']
+                toAdd = ['suspension']
+                for c in toAdd:
+                    components.append(c)
+                    subsystemsForComponents[c] = subsystem
+                componentsForSubsystems[subsystem] = toAdd
+            else:
+                components.append(subsystem)
+                componentsForSubsystems[subsystem] = [subsystem]
+                subsystemsForComponents[subsystem] = subsystem
+        assembliesStructure = {'midbody' : ['engine', 'cabin', 'side wing'], 
+                            'front' : ['front wing', 'front tire', 'impactattenuator', 'suspension'], 
+                            'rear' : ['rear wing', 'brakes', 'rear tire'],}
+        assemblyNodes = list(assembliesStructure.keys())
+        finalNodes = ['FINAL']
+        self.components = components
+        self.assemblyNodes = assemblyNodes
+        self.finalNodes = finalNodes
+        self.allNodes = components + assemblyNodes + finalNodes
+        self.assembliesStructure = assembliesStructure
+        self.nonComponentNodes = assemblyNodes + finalNodes
+
+    def createSupplyChainGraph(self):
+        G = nx.DiGraph()
+
+        numNodes = len(self.components) + len(self.assemblyNodes) + len(self.finalNodes)
+
+        np.random.seed(0)
+        stageCostsList = np.random.randint(1, 10, numNodes)
+        processTimesList = np.random.randint(1, 10, numNodes)
+        maxServiceTimeOutList = 200*np.ones(numNodes)
+        maxServiceTimeOutList[numNodes-1] = 0
+
+        for n in self.allNodes:
+            time = np.random.randint(1, 10)
+            G.add_node(n, process_time=time, 
+                    max_service_time_out=2*time,
+                    stage_cost=np.random.randint(1, 10))
+
+        for n in self.assemblyNodes:
+            for component in self.assembliesStructure[n]:
+                G.add_edge(component, n)
+
+        for n in self.assemblyNodes:
+            for n2 in self.finalNodes:
+                G.add_edge(n, n2)
+
+        maxServiceTimeOut = nx.get_node_attributes(G, 'max_service_time_out')
+        self.G = G
