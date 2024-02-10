@@ -87,3 +87,18 @@ def getMarketShare(car : COTSCar, c : str, competitors : List[COTSCar], utilFn =
     carUtility = getTotalUtilityForCustomer(car, c, utilFn)
     totalCompetitorUtility = sum([getTotalUtilityForCustomer(competitorCar, c, utilFn) for competitorCar in competitors])
     return carUtility / (totalCompetitorUtility + carUtility)
+
+def handleStatus(m : gp.Model):
+    status = m.status
+    if status == GRB.Status.INFEASIBLE:
+        print("The model is infeasible. Computing IIS.")
+        m.computeIIS()
+        m.write('iismodel.ilp')
+    elif status == GRB.Status.UNBOUNDED:
+        print("The model is unbounded.")
+    elif status == GRB.Status.OPTIMAL:
+        print("The model is optimal.")
+    elif status == GRB.Status.INF_OR_UNBD:  
+        print("The model status is infeasible or unbounded. Set DualReductions parameter to 0 and reoptimize.")
+    else:
+        print("The model status is neither infeasible nor unbounded.")
