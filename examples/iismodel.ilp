@@ -1,19 +1,37 @@
-\ Model safety stock_copy
+\ Model shortest_path_copy
 \ LP format - for model browsing. Use MPS format to capture full model detail.
-Maximize
+Minimize
  
 Subject To
- componentsRequired: componentSelect[rear_wing]
-   + componentSelect[front_wing] + componentSelect[side_wing]
-   + componentSelect[front_tire] + componentSelect[rear_tire]
-   + componentSelect[engine] + componentSelect[cabin]
-   + componentSelect[impactattenuator] + componentSelect[brakes]
-   + componentSelect[suspension] = 11
+ netflow[3_0]: x[3_0,3^0,1] + x[3_0,3^0,2] - x[1^0,3_0,1] - x[2^0,3_0,2]
+   = 0
+ netflow[3_1]: x[3_1,3^0,1] + x[3_1,3^0,2] - x[1^1,3_1,1] - x[2^1,3_1,2]
+   = 0
+ netflow[3_2]: x[3_2,3^0,1] + x[3_2,3^0,2] - x[2^2,3_2,2] = 0
+ netflow[3^0]: - x[3_0,3^0,1] - x[3_0,3^0,2] - x[3_1,3^0,1] - x[3_1,3^0,2]
+   - x[3_2,3^0,1] - x[3_2,3^0,2] = -1
+ netflow[1_0]: x[1_0,1^0,1] + x[1_0,1^1,1] = 1
+ netflow[1^0]: - x[1_0,1^0,1] + x[1^0,3_0,1] = 0
+ netflow[1^1]: - x[1_0,1^1,1] + x[1^1,3_1,1] = 0
+ netflow[2_0]: x[2_0,2^0,2] + x[2_0,2^1,2] + x[2_0,2^2,2] = 1
+ netflow[2^0]: - x[2_0,2^0,2] + x[2^0,3_0,2] = 0
+ netflow[2^1]: - x[2_0,2^1,2] + x[2^1,3_1,2] = 0
+ netflow[2^2]: - x[2_0,2^2,2] + x[2^2,3_2,2] = 0
 Bounds
-Binaries
- componentSelect[rear_wing] componentSelect[front_wing]
- componentSelect[side_wing] componentSelect[front_tire]
- componentSelect[rear_tire] componentSelect[engine] componentSelect[cabin]
- componentSelect[impactattenuator] componentSelect[brakes]
- componentSelect[suspension]
+ x[3_0,3^0,1] free
+ x[3_0,3^0,2] free
+ x[3_1,3^0,1] free
+ x[3_1,3^0,2] free
+ x[3_2,3^0,1] free
+ x[3_2,3^0,2] free
+ x[1_0,1^0,1] free
+ x[1_0,1^1,1] free
+ x[1^0,3_0,1] free
+ x[1^1,3_1,1] free
+ x[2_0,2^0,2] free
+ x[2_0,2^1,2] free
+ x[2_0,2^2,2] free
+ x[2^0,3_0,2] free
+ x[2^1,3_1,2] free
+ x[2^2,3_2,2] free
 End
