@@ -3,8 +3,15 @@
 Minimize
  
 Subject To
- netflow[3_0]: x[3_0,3^0,3] + x[3_0,3^1,3] + x[3_0,3^2,3] = 0
- netflow[3^0]: - x[3_0,3^0,3] + x[3^0,4_0,3] = -1
+ netflow-multi[7_0,1]: x[7_0,7^0,1] = 0
+ netflow-multi[7_1,1]: x[7_1,7^0,1] = 0
+ netflow-multi[7_2,1]: x[7_2,7^0,1] = 0
+ netflow-multi[7_3,1]: x[7_3,7^0,1] = 0
+ netflow-multi[7^0,1]: - x[7_0,7^0,1] - x[7_1,7^0,1] - x[7_2,7^0,1]
+   - x[7_3,7^0,1] = -1
 Bounds
- x[3_0,3^0,3] free
+ x[7_0,7^0,1] free
+ x[7_1,7^0,1] free
+ x[7_2,7^0,1] free
+ x[7_3,7^0,1] free
 End
