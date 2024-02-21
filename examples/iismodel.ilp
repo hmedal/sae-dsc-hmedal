@@ -1,37 +1,10 @@
-\ Model shortest_path_copy
+\ Model shortest_paths_copy
 \ LP format - for model browsing. Use MPS format to capture full model detail.
 Minimize
  
 Subject To
- netflow[3_0]: x[3_0,3^0,1] + x[3_0,3^0,2] - x[1^0,3_0,1] - x[2^0,3_0,2]
-   = 0
- netflow[3_1]: x[3_1,3^0,1] + x[3_1,3^0,2] - x[1^1,3_1,1] - x[2^1,3_1,2]
-   = 0
- netflow[3_2]: x[3_2,3^0,1] + x[3_2,3^0,2] - x[2^2,3_2,2] = 0
- netflow[3^0]: - x[3_0,3^0,1] - x[3_0,3^0,2] - x[3_1,3^0,1] - x[3_1,3^0,2]
-   - x[3_2,3^0,1] - x[3_2,3^0,2] = -1
- netflow[1_0]: x[1_0,1^0,1] + x[1_0,1^1,1] = 1
- netflow[1^0]: - x[1_0,1^0,1] + x[1^0,3_0,1] = 0
- netflow[1^1]: - x[1_0,1^1,1] + x[1^1,3_1,1] = 0
- netflow[2_0]: x[2_0,2^0,2] + x[2_0,2^1,2] + x[2_0,2^2,2] = 1
- netflow[2^0]: - x[2_0,2^0,2] + x[2^0,3_0,2] = 0
- netflow[2^1]: - x[2_0,2^1,2] + x[2^1,3_1,2] = 0
- netflow[2^2]: - x[2_0,2^2,2] + x[2^2,3_2,2] = 0
+ netflow[3_0]: x[3_0,3^0,3] + x[3_0,3^1,3] + x[3_0,3^2,3] = 0
+ netflow[3^0]: - x[3_0,3^0,3] + x[3^0,4_0,3] = -1
 Bounds
- x[3_0,3^0,1] free
- x[3_0,3^0,2] free
- x[3_1,3^0,1] free
- x[3_1,3^0,2] free
- x[3_2,3^0,1] free
- x[3_2,3^0,2] free
- x[1_0,1^0,1] free
- x[1_0,1^1,1] free
- x[1^0,3_0,1] free
- x[1^1,3_1,1] free
- x[2_0,2^0,2] free
- x[2_0,2^1,2] free
- x[2_0,2^2,2] free
- x[2^0,3_0,2] free
- x[2^1,3_1,2] free
- x[2^2,3_2,2] free
+ x[3_0,3^0,3] free
 End
