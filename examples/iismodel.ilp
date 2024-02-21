@@ -3,15 +3,6 @@
 Minimize
  
 Subject To
- netflow-multi[7_0,1]: x[7_0,7^0,1] = 0
- netflow-multi[7_1,1]: x[7_1,7^0,1] = 0
- netflow-multi[7_2,1]: x[7_2,7^0,1] = 0
- netflow-multi[7_3,1]: x[7_3,7^0,1] = 0
- netflow-multi[7^0,1]: - x[7_0,7^0,1] - x[7_1,7^0,1] - x[7_2,7^0,1]
-   - x[7_3,7^0,1] = -1
+ netflow-multi[1_0,2]: = 1
 Bounds
- x[7_0,7^0,1] free
- x[7_1,7^0,1] free
- x[7_2,7^0,1] free
- x[7_3,7^0,1] free
 End
